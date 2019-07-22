@@ -1,13 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-const SearchForm = () => {
+const SearchForm = ({datosConsulta}) => {
 
-    const handleChange = () => {
+    const [busqueda, guardarBusqueda] = useState({
+        ciudad: '',
+        pais: ''
+    })
 
+    const handleChange = e => {
+        guardarBusqueda({
+            ...busqueda,
+            [e.target.name] : e.target.value
+        })
+    }
+
+    const consultarClima = e => {
+        e.preventDefault()
+
+        // pasar hacia el componente principal la busqueda
+        datosConsulta(busqueda)
     }
 
     return (
-        <form>
+        <form onSubmit={consultarClima}>
             <div className="input-field col s12">
                 <input type="text" name="ciudad" id="ciudad" onChange={handleChange}/>
                 <label htmlFor="ciudad">Ciudad: </label>

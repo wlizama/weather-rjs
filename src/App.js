@@ -1,8 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from './Components/Header';
 import SearchForm from './Components/SearchForm'
 
 function App() {
+
+	const [ciudad, guardarCiudad] = useState('')
+	const [pais, guardarPais] = useState('')
+
+	const datosConsulta = datos => {
+		// validacion de datos
+		if (datos.ciudad === '' || datos.pais === '') {
+			
+			return
+		}
+
+		guardarCiudad(datos.ciudad)
+		guardarPais(datos.pais)
+	}
+
 	return (
 		<div className="App">
 			<Header titulo="Hola Hooks" />
@@ -11,7 +26,7 @@ function App() {
 				<div className="container">
 					<div className="row">
 						<div className="col s12 m6">
-							<SearchForm />
+							<SearchForm datosConsulta={datosConsulta} />
 						</div>
 					</div>
 				</div>
