@@ -1,10 +1,10 @@
 import React from 'react';
+import Header from './Components/Header';
+
 function App() {
 	return (
 		<div className="App">
-			<header className="App-header">
-				<h1>Hola Hooks</h1>
-			</header>
+			<Header titulo="Hola Hooks" />
 		</div>
 	);
 }
