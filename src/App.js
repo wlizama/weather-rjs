@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from './Components/Header';
 import SearchForm from './Components/SearchForm'
 import Error from './Components/Error';
+import Clima from './Components/Clima';
 import API_CONF from './api.conf';
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
 	const [ciudad, guardarCiudad] = useState('')
 	const [pais, guardarPais] = useState('')
 	const [error, guardarError] = useState('')
+	const [resultado, guardarResultado] = useState({})
 
 
 	useEffect(() => {
@@ -21,7 +23,7 @@ function App() {
 			const respuesta = await fetch(URL)
 			const resultado = await respuesta.json()
 	
-			console.log(resultado)
+			guardarResultado(resultado)
 		}
 
 		consultarAPI()
@@ -41,7 +43,16 @@ function App() {
 	}
 
 
-	let ErrorComp = error ? <Error mensaje='Ambos campos son obligatorios' /> : null
+	let ErrorComp
+	if (error) {
+		ErrorComp = <Error mensaje='Ambos campos son obligatorios' />
+	}
+	else if (resultado.cod === "404") {
+		ErrorComp = <Error mensaje={`No se pudo encontrar "${ciudad}" en el país ${pais}`} />
+	}
+	else {
+		ErrorComp = <Clima resultado={resultado} />
+	}
 
 	return (
 		<div className="App">
